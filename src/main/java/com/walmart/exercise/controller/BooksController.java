@@ -30,9 +30,12 @@ public class BooksController {
 
     @PostMapping
     public ResponseEntity<?> addBook(@RequestBody Book book){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.saveBook(book));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.saveBook(book));
+        } catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
-
 
     @GetMapping("/autorName/{autorName}")
     public ResponseEntity<?> getBookByAutorName(@PathVariable String autorName){
